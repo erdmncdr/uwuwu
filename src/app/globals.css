@@ -1,0 +1,224 @@
+@import "tailwindcss";
+
+/* 2026-style Design System */
+:root {
+  /* Dark Base Colors */
+  --background: 10 10 15;
+  --foreground: 245 245 250;
+
+  /* Primary Colors - Neon Purple/Blue Gradient */
+  --primary: 168 85 247;
+  --primary-foreground: 255 255 255;
+
+  /* Accent Colors - Cyan/Teal */
+  --accent: 34 211 238;
+  --accent-foreground: 10 10 15;
+
+  /* Muted Colors */
+  --muted: 30 30 40;
+  --muted-foreground: 161 161 170;
+
+  /* Card/Surface with Glassmorphism */
+  --card: 20 20 30;
+  --card-foreground: 245 245 250;
+
+  /* Border Colors */
+  --border: 39 39 42;
+  --input: 39 39 42;
+  --ring: 168 85 247;
+
+  /* Destructive */
+  --destructive: 239 68 68;
+  --destructive-foreground: 255 255 255;
+
+  /* Success */
+  --success: 34 197 94;
+  --success-foreground: 255 255 255;
+
+  /* Radius */
+  --radius: 1rem;
+}
+
+@theme inline {
+  /* Color Palette */
+  --color-background: rgb(var(--background));
+  --color-foreground: rgb(var(--foreground));
+  --color-primary: rgb(var(--primary));
+  --color-primary-foreground: rgb(var(--primary-foreground));
+  --color-accent: rgb(var(--accent));
+  --color-accent-foreground: rgb(var(--accent-foreground));
+  --color-muted: rgb(var(--muted));
+  --color-muted-foreground: rgb(var(--muted-foreground));
+  --color-card: rgb(var(--card));
+  --color-card-foreground: rgb(var(--card-foreground));
+  --color-border: rgb(var(--border));
+  --color-input: rgb(var(--input));
+  --color-ring: rgb(var(--ring));
+  --color-destructive: rgb(var(--destructive));
+  --color-destructive-foreground: rgb(var(--destructive-foreground));
+  --color-success: rgb(var(--success));
+  --color-success-foreground: rgb(var(--success-foreground));
+
+  /* Typography */
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+
+  /* Border Radius */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
+  --radius-2xl: calc(var(--radius) + 12px);
+}
+
+/* Base Styles */
+* {
+  border-color: rgb(var(--border));
+}
+
+body {
+  background: linear-gradient(
+    135deg,
+    rgb(10, 10, 15) 0%,
+    rgb(20, 15, 35) 50%,
+    rgb(15, 10, 25) 100%
+  );
+  background-attachment: fixed;
+  color: rgb(var(--foreground));
+  font-family: var(--font-sans);
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--muted));
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--primary));
+}
+
+/* Glassmorphism Utility Classes */
+.glass {
+  background: rgba(var(--card), 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(var(--border), 0.5);
+}
+
+.glass-strong {
+  background: rgba(var(--card), 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(var(--border), 0.8);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    rgb(var(--primary)) 0%,
+    rgb(var(--accent)) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow Effects */
+.glow {
+  box-shadow: 0 0 20px rgba(var(--primary), 0.3);
+}
+
+.glow-strong {
+  box-shadow: 0 0 30px rgba(var(--primary), 0.5);
+}
+
+.glow-accent {
+  box-shadow: 0 0 20px rgba(var(--accent), 0.3);
+}
+
+/* Button Glow on Hover */
+.btn-glow:hover {
+  box-shadow: 0 0 25px rgba(var(--primary), 0.4);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Smooth Transitions */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Focus Visible */
+*:focus-visible {
+  outline: 2px solid rgb(var(--ring));
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background: rgba(var(--primary), 0.3);
+  color: rgb(var(--foreground));
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.5s ease;
+}
+
+/* Loading Skeleton */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(var(--muted), 0.4) 25%,
+    rgba(var(--muted), 0.6) 50%,
+    rgba(var(--muted), 0.4) 75%
+  );
+  background-size: 2000px 100%;
+  animation: shimmer 2s infinite;
+}

@@ -1,0 +1,268 @@
+// Prisma Schema for Quiz Tournament Platform
+// Database: PostgreSQL
+// ORM: Prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USER & AUTH MODELS
+// ============================================
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  username      String   @unique
+  passwordHash  String   @map("password_hash")
+  avatarUrl     String?  @map("avatar_url")
+  bio           String?  @db.Text
+  preferredLang String   @default("en") @map("preferred_lang") @db.VarChar(10)
+  nsfwAllowed   Boolean  @default(false) @map("nsfw_allowed")
+  role          UserRole @default(USER)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  quizzes      Quiz[]
+  gameSessions GameSession[]
+  reports      Report[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  USER
+  MODERATOR
+  ADMIN
+}
+
+// ============================================
+// CATEGORY MODEL
+// ============================================
+
+model Category {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  name        String
+  description String?  @db.Text
+  icon        String?  // emoji or icon identifier
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  quizzes Quiz[]
+
+  @@map("categories")
+}
+
+// ============================================
+// QUIZ MODELS
+// ============================================
+
+model Quiz {
+  id              String         @id @default(uuid())
+  slug            String         @unique
+  title           String
+  description     String         @db.Text
+  coverImageUrl   String         @map("cover_image_url")
+  creatorId       String         @map("creator_id")
+  categoryId      Int            @map("category_id")
+  language        String         @default("en") @db.VarChar(10)
+  isNsfw          Boolean        @default(false) @map("is_nsfw")
+  visibility      QuizVisibility @default(PUBLIC)
+  type            QuizType       @default(WORLDCUP)
+  playCount       BigInt         @default(0) @map("play_count")
+  viewCount       BigInt         @default(0) @map("view_count")
+  favoriteCount   BigInt         @default(0) @map("favorite_count")
+  status          QuizStatus     @default(ACTIVE)
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+  publishedAt     DateTime?      @map("published_at")
+
+  // Relations
+  creator      User          @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  category     Category      @relation(fields: [categoryId], references: [id])
+  items        QuizItem[]
+  gameSessions GameSession[]
+  reports      Report[]
+
+  @@index([creatorId])
+  @@index([categoryId])
+  @@index([slug])
+  @@index([visibility, status])
+  @@index([createdAt])
+  @@index([playCount])
+  @@map("quizzes")
+}
+
+enum QuizVisibility {
+  PUBLIC
+  UNLISTED
+  PRIVATE
+}
+
+enum QuizType {
+  WORLDCUP
+  BRACKET
+  ELIMINATION
+}
+
+enum QuizStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+  SUSPENDED
+}
+
+// ============================================
+// QUIZ ITEM MODEL
+// ============================================
+
+model QuizItem {
+  id          String   @id @default(uuid())
+  quizId      String   @map("quiz_id")
+  name        String
+  description String?  @db.Text
+  imageUrl    String   @map("image_url")
+  orderIndex  Int      @map("order_index")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  quiz            Quiz        @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  stats           ItemStats?
+  matchesAsItemA  Match[]     @relation("MatchItemA")
+  matchesAsItemB  Match[]     @relation("MatchItemB")
+  matchesAsChosen Match[]     @relation("MatchChosen")
+  wonSessions     GameSession[]
+
+  @@index([quizId])
+  @@map("quiz_items")
+}
+
+// ============================================
+// GAME SESSION MODEL
+// ============================================
+
+model GameSession {
+  id              String        @id @default(uuid())
+  quizId          String        @map("quiz_id")
+  userId          String?       @map("user_id") // nullable for anonymous players
+  status          SessionStatus @default(IN_PROGRESS)
+  startedAt       DateTime      @default(now()) @map("started_at")
+  finishedAt      DateTime?     @map("finished_at")
+  finalWinnerId   String?       @map("final_winner_id")
+  totalRounds     Int           @default(0) @map("total_rounds")
+  ipAddress       String?       @map("ip_address") @db.VarChar(45)
+  userAgent       String?       @map("user_agent") @db.Text
+
+  // Relations
+  quiz        Quiz      @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  user        User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  finalWinner QuizItem? @relation(fields: [finalWinnerId], references: [id])
+  matches     Match[]
+
+  @@index([quizId])
+  @@index([userId])
+  @@index([startedAt])
+  @@map("game_sessions")
+}
+
+enum SessionStatus {
+  IN_PROGRESS
+  COMPLETED
+  ABORTED
+}
+
+// ============================================
+// MATCH MODEL
+// ============================================
+
+model Match {
+  id            String   @id @default(uuid())
+  sessionId     String   @map("session_id")
+  roundNumber   Int      @map("round_number")
+  matchIndex    Int      @map("match_index")
+  itemAId       String   @map("item_a_id")
+  itemBId       String   @map("item_b_id")
+  chosenItemId  String?  @map("chosen_item_id")
+  respondedAt   DateTime? @map("responded_at")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  // Relations
+  session    GameSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  itemA      QuizItem    @relation("MatchItemA", fields: [itemAId], references: [id])
+  itemB      QuizItem    @relation("MatchItemB", fields: [itemBId], references: [id])
+  chosenItem QuizItem?   @relation("MatchChosen", fields: [chosenItemId], references: [id])
+
+  @@index([sessionId])
+  @@index([roundNumber])
+  @@map("matches")
+}
+
+// ============================================
+// ITEM STATS MODEL
+// ============================================
+
+model ItemStats {
+  id          String   @id @default(uuid())
+  quizItemId  String   @unique @map("quiz_item_id")
+  winCount    BigInt   @default(0) @map("win_count")
+  lossCount   BigInt   @default(0) @map("loss_count")
+  matchCount  BigInt   @default(0) @map("match_count")
+  finalWins   BigInt   @default(0) @map("final_wins") // times this item won the entire tournament
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  quizItem QuizItem @relation(fields: [quizItemId], references: [id], onDelete: Cascade)
+
+  @@map("item_stats")
+}
+
+// ============================================
+// REPORT MODEL (Moderation)
+// ============================================
+
+model Report {
+  id            String       @id @default(uuid())
+  reporterId    String       @map("reporter_id")
+  targetType    ReportTarget @map("target_type")
+  targetId      String       @map("target_id")
+  quizId        String?      @map("quiz_id") // denormalized for easy queries
+  reason        String       @db.Text
+  status        ReportStatus @default(OPEN)
+  moderatorNote String?      @map("moderator_note") @db.Text
+  resolvedAt    DateTime?    @map("resolved_at")
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+
+  // Relations
+  reporter User  @relation(fields: [reporterId], references: [id], onDelete: Cascade)
+  quiz     Quiz? @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@index([reporterId])
+  @@index([targetType, targetId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("reports")
+}
+
+enum ReportTarget {
+  QUIZ
+  ITEM
+  USER
+}
+
+enum ReportStatus {
+  OPEN
+  UNDER_REVIEW
+  RESOLVED
+  REJECTED
+}
