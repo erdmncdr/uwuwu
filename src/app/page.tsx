@@ -126,47 +126,52 @@ const CATEGORIES = [
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const [quizzes, setQuizzes] = useState(MOCK_QUIZZES);
-  const [filteredQuizzes, setFilteredQuizzes] = useState(MOCK_QUIZZES);
+  const [quizzes, setQuizzes] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState<"latest" | "popular">("popular");
   const [searchQuery, setSearchQuery] = useState("");
+  const [error, setError] = useState("");
 
+  // Fetch quizzes from API
   useEffect(() => {
-    // Simulate loading
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
+    const fetchQuizzes = async () => {
+      try {
+        setLoading(true);
+        setError("");
 
-  useEffect(() => {
-    // Filter and sort quizzes
-    let filtered = quizzes;
+        const params = new URLSearchParams({
+          sort: sortBy,
+          limit: "12",
+        });
 
-    // Filter by category
-    if (selectedCategory !== "all") {
-      filtered = filtered.filter(
-        (quiz) => quiz.category.slug === selectedCategory
-      );
-    }
+        if (selectedCategory && selectedCategory !== "all") {
+          params.append("category", selectedCategory);
+        }
 
-    // Filter by search query
-    if (searchQuery) {
-      filtered = filtered.filter(
-        (quiz) =>
-          quiz.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          quiz.description.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
+        if (searchQuery) {
+          params.append("search", searchQuery);
+        }
 
-    // Sort
-    if (sortBy === "popular") {
-      filtered = [...filtered].sort((a, b) => b.playCount - a.playCount);
-    } else {
-      // For demo, just reverse the order for "latest"
-      filtered = [...filtered].reverse();
-    }
+        const response = await fetch(`/api/quizzes?${params.toString()}`);
 
-    setFilteredQuizzes(filtered);
-  }, [selectedCategory, sortBy, searchQuery, quizzes]);
+        if (!response.ok) {
+          throw new Error("Failed to fetch quizzes");
+        }
+
+        const data = await response.json();
+        setQuizzes(data.quizzes || []);
+      } catch (err) {
+        console.error("Error fetching quizzes:", err);
+        setError("Failed to load quizzes. Please try again later.");
+        // Fallback to mock data on error
+        setQuizzes(MOCK_QUIZZES);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchQuizzes();
+  }, [selectedCategory, sortBy, searchQuery]);
 
   return (
     <div className="container mx-auto px-4 py-12 space-y-12">
@@ -262,9 +267,15 @@ export default function Home() {
       <section className="space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold">
-            {filteredQuizzes.length} Quiz{filteredQuizzes.length !== 1 ? "zes" : ""} Found
+            {quizzes.length} Quiz{quizzes.length !== 1 ? "zes" : ""} Found
           </h2>
         </div>
+
+        {error && (
+          <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/50 text-destructive text-center">
+            {error}
+          </div>
+        )}
 
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -272,9 +283,9 @@ export default function Home() {
               <QuizCardSkeleton key={i} />
             ))}
           </div>
-        ) : filteredQuizzes.length > 0 ? (
+        ) : quizzes.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredQuizzes.map((quiz) => (
+            {quizzes.map((quiz) => (
               <QuizCard key={quiz.id} quiz={quiz} />
             ))}
           </div>

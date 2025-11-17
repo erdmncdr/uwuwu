@@ -95,11 +95,11 @@ export function QuizCard({ quiz }: { quiz: QuizCardProps }) {
               <div className="flex items-center gap-3 text-xs text-muted-foreground">
                 <div className="flex items-center gap-1">
                   <Play className="w-3 h-3" />
-                  <span>{formatNumber(quiz.playCount)}</span>
+                  <span>{formatNumber(Number(quiz.playCount))}</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Eye className="w-3 h-3" />
-                  <span>{formatNumber(quiz.viewCount)}</span>
+                  <span>{formatNumber(Number(quiz.viewCount))}</span>
                 </div>
               </div>
             </div>
