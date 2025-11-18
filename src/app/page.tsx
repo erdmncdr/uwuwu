@@ -7,6 +7,7 @@ import { QuizCardSkeleton } from "@/components/quiz/quiz-card-skeleton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/components/providers/i18n-provider";
 
 // Mock data for demonstration
 const MOCK_QUIZZES = [
@@ -114,23 +115,24 @@ const MOCK_QUIZZES = [
   },
 ];
 
-const CATEGORIES = [
-  { name: "All", slug: "all" },
-  { name: "Anime", slug: "anime" },
-  { name: "Gaming", slug: "gaming" },
-  { name: "Movies", slug: "movies" },
-  { name: "Food", slug: "food" },
-  { name: "Technology", slug: "tech" },
-  { name: "Travel", slug: "travel" },
-];
-
 export default function Home() {
+  const { t } = useI18n();
   const [loading, setLoading] = useState(true);
   const [quizzes, setQuizzes] = useState<any[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState<"latest" | "popular">("popular");
   const [searchQuery, setSearchQuery] = useState("");
   const [error, setError] = useState("");
+
+  const CATEGORIES = [
+    { name: t("home.categories.all"), slug: "all" },
+    { name: "Anime", slug: "anime" },
+    { name: "Gaming", slug: "gaming" },
+    { name: "Movies", slug: "movies" },
+    { name: "Food", slug: "food" },
+    { name: "Technology", slug: "tech" },
+    { name: "Travel", slug: "travel" },
+  ];
 
   // Fetch quizzes from API
   useEffect(() => {
@@ -179,24 +181,23 @@ export default function Home() {
       <section className="text-center space-y-6 py-12">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm font-medium">
           <Sparkles className="w-4 h-4 text-primary" />
-          <span>Discover & Create Tournaments</span>
+          <span>{t("home.hero.badge")}</span>
         </div>
         <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-          <span className="gradient-text">Choose Your Favorites</span>
+          <span className="gradient-text">{t("home.hero.title")}</span>
           <br />
-          <span className="text-foreground">One Battle at a Time</span>
+          <span className="text-foreground">{t("home.hero.subtitle")}</span>
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Create worldcup-style tournaments or play existing ones. Vote for your
-          favorites and see what comes out on top!
+          {t("home.hero.description")}
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
           <Button variant="gradient" size="lg" asChild>
-            <a href="/create-game">Create Your Tournament</a>
+            <a href="/create-game">{t("home.hero.createBtn")}</a>
           </Button>
           <Button variant="outline" size="lg">
             <Filter className="w-4 h-4 mr-2" />
-            Browse Quizzes
+            {t("home.hero.browseBtn")}
           </Button>
         </div>
       </section>
@@ -208,7 +209,7 @@ export default function Home() {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
           <Input
             type="search"
-            placeholder="Search quizzes..."
+            placeholder={t("home.search.placeholder")}
             className="pl-12 h-14 text-lg"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -235,7 +236,7 @@ export default function Home() {
 
         {/* Sort Options */}
         <div className="flex items-center justify-center gap-4">
-          <span className="text-sm text-muted-foreground">Sort by:</span>
+          <span className="text-sm text-muted-foreground">{t("home.sort.label")}</span>
           <div className="flex gap-2">
             <button
               onClick={() => setSortBy("popular")}
@@ -246,7 +247,7 @@ export default function Home() {
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
-              Popular
+              {t("home.sort.popular")}
             </button>
             <button
               onClick={() => setSortBy("latest")}
@@ -257,7 +258,7 @@ export default function Home() {
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
-              Latest
+              {t("home.sort.latest")}
             </button>
           </div>
         </div>
@@ -267,7 +268,10 @@ export default function Home() {
       <section className="space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold">
-            {quizzes.length} Quiz{quizzes.length !== 1 ? "zes" : ""} Found
+            {quizzes.length === 1
+              ? t("home.results.found", { count: quizzes.length })
+              : t("home.results.found_other", { count: quizzes.length })
+            }
           </h2>
         </div>
 
@@ -294,9 +298,9 @@ export default function Home() {
             <div className="w-16 h-16 rounded-full bg-muted/50 flex items-center justify-center mx-auto">
               <Search className="w-8 h-8 text-muted-foreground" />
             </div>
-            <h3 className="text-xl font-semibold">No quizzes found</h3>
+            <h3 className="text-xl font-semibold">{t("home.results.noResults")}</h3>
             <p className="text-muted-foreground">
-              Try adjusting your filters or search query
+              {t("home.results.tryAdjusting")}
             </p>
           </div>
         )}
