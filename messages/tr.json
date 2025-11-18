@@ -147,7 +147,8 @@
       "categoryRequired": "Lütfen bir kategori seçin",
       "minItems": "Turnuva için en az 4 öğe gerekli",
       "maxItems": "Maksimum 64 öğe eklenebilir",
-      "emptyItems": "Tüm öğelerin ismi ve resim URL'si olmalı"
+      "emptyItems": "Tüm öğelerin ismi ve resim URL'si olmalı",
+      "genericError": "Bir hata oluştu. Lütfen tekrar deneyin."
     }
   },
   "worldcup": {

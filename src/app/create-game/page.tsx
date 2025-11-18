@@ -18,6 +18,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/components/providers/i18n-provider";
+import { toast } from "sonner";
 
 interface QuizItem {
   id: string;
@@ -33,18 +35,19 @@ interface Category {
   icon: string;
 }
 
-const STEPS = [
-  { id: 1, name: "Basic Info", description: "Title, category, and description" },
-  { id: 2, name: "Add Items", description: "Add items to your tournament" },
-  { id: 3, name: "Preview", description: "Review and publish" },
-];
-
 export default function CreateGamePage() {
+  const { t } = useI18n();
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [error, setError] = useState("");
+
+  const STEPS = [
+    { id: 1, name: t("createGame.steps.basicInfo"), description: t("createGame.steps.basicInfoDesc") },
+    { id: 2, name: t("createGame.steps.addItems"), description: t("createGame.steps.addItemsDesc") },
+    { id: 3, name: t("createGame.steps.preview"), description: t("createGame.steps.previewDesc") },
+  ];
 
   // Form data
   const [title, setTitle] = useState("");
@@ -114,43 +117,61 @@ export default function CreateGamePage() {
 
     if (step === 1) {
       if (!title.trim()) {
-        setError("Title is required");
+        const msg = t("createGame.errors.titleRequired");
+        setError(msg);
+        toast.error(msg);
         return false;
       }
       if (title.trim().length < 3) {
-        setError("Title must be at least 3 characters");
+        const msg = t("createGame.errors.titleTooShort");
+        setError(msg);
+        toast.error(msg);
         return false;
       }
       if (!description.trim()) {
-        setError("Description is required");
+        const msg = t("createGame.errors.descRequired");
+        setError(msg);
+        toast.error(msg);
         return false;
       }
       if (description.trim().length < 10) {
-        setError("Description must be at least 10 characters");
+        const msg = t("createGame.errors.descTooShort");
+        setError(msg);
+        toast.error(msg);
         return false;
       }
       if (!coverImageUrl.trim()) {
-        setError("Cover image URL is required");
+        const msg = t("createGame.errors.coverRequired");
+        setError(msg);
+        toast.error(msg);
         return false;
       }
       if (!categoryId) {
-        setError("Please select a category");
+        const msg = t("createGame.errors.categoryRequired");
+        setError(msg);
+        toast.error(msg);
         return false;
       }
     }
 
     if (step === 2) {
       if (items.length < 4) {
-        setError("You need at least 4 items for a tournament");
+        const msg = t("createGame.errors.minItems");
+        setError(msg);
+        toast.error(msg);
         return false;
       }
       if (items.length > 64) {
-        setError("Maximum 64 items allowed");
+        const msg = t("createGame.errors.maxItems");
+        setError(msg);
+        toast.error(msg);
         return false;
       }
       const emptyItems = items.filter((item) => !item.name.trim() || !item.imageUrl.trim());
       if (emptyItems.length > 0) {
-        setError("All items must have a name and image URL");
+        const msg = t("createGame.errors.emptyItems");
+        setError(msg);
+        toast.error(msg);
         return false;
       }
     }
@@ -194,13 +215,16 @@ export default function CreateGamePage() {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || "Failed to create quiz");
+        throw new Error(data.error || t("createGame.errors.genericError"));
       }
 
       const data = await response.json();
+      toast.success(t("createGame.step3.publishBtn"));
       router.push(`/worldcup/${data.quiz.slug}`);
     } catch (err: any) {
-      setError(err.message || "An error occurred while creating the quiz");
+      const errorMsg = err.message || t("createGame.errors.genericError");
+      setError(errorMsg);
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -213,13 +237,13 @@ export default function CreateGamePage() {
         <div className="text-center space-y-4">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm font-medium">
             <Sparkles className="w-4 h-4 text-primary" />
-            <span>Create Your Tournament</span>
+            <span>{t("createGame.badge")}</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold gradient-text">
-            Build Your Quiz
+            {t("createGame.title")}
           </h1>
           <p className="text-muted-foreground text-lg">
-            Create a worldcup-style tournament in just a few steps
+            {t("createGame.description")}
           </p>
         </div>
 
@@ -622,12 +646,12 @@ export default function CreateGamePage() {
             disabled={currentStep === 1 || loading}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
+            {t("createGame.navigation.back")}
           </Button>
 
           {currentStep < STEPS.length ? (
             <Button variant="gradient" onClick={nextStep} disabled={loading}>
-              Next
+              {t("createGame.navigation.next")}
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           ) : (
@@ -640,12 +664,12 @@ export default function CreateGamePage() {
               {loading ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Creating...
+                  {t("createGame.step3.publishingBtn")}
                 </>
               ) : (
                 <>
                   <Check className="w-4 h-4 mr-2" />
-                  Publish Tournament
+                  {t("createGame.step3.publishBtn")}
                 </>
               )}
             </Button>

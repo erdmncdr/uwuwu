@@ -147,7 +147,8 @@
       "categoryRequired": "Please select a category",
       "minItems": "You need at least 4 items for a tournament",
       "maxItems": "Maximum 64 items allowed",
-      "emptyItems": "All items must have a name and image URL"
+      "emptyItems": "All items must have a name and image URL",
+      "genericError": "An error occurred. Please try again."
     }
   },
   "worldcup": {

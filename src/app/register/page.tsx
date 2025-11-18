@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { useI18n } from "@/components/providers/i18n-provider";
+import { toast } from "sonner";
 
 export default function RegisterPage() {
   const { t } = useI18n();
@@ -29,7 +30,9 @@ export default function RegisterPage() {
 
     // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
-      setError(t("auth.errors.passwordsDontMatch"));
+      const errorMsg = t("auth.errors.passwordsDontMatch");
+      setError(errorMsg);
+      toast.error(errorMsg);
       return;
     }
 
@@ -49,15 +52,21 @@ export default function RegisterPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || t("auth.errors.genericError"));
+        const errorMsg = data.error || t("auth.errors.genericError");
+        setError(errorMsg);
+        toast.error(errorMsg);
         return;
       }
+
+      toast.success(t("auth.register.title"));
 
       // Redirect to home after successful registration
       router.push("/");
       router.refresh();
     } catch (err) {
-      setError(t("auth.errors.genericError"));
+      const errorMsg = t("auth.errors.genericError");
+      setError(errorMsg);
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }

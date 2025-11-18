@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { useI18n } from "@/components/providers/i18n-provider";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const { t } = useI18n();
@@ -36,16 +37,22 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || t("auth.errors.invalidCredentials"));
+        const errorMsg = data.error || t("auth.errors.invalidCredentials");
+        setError(errorMsg);
+        toast.error(errorMsg);
         return;
       }
+
+      toast.success(t("auth.login.title"));
 
       // Redirect to home or previous page
       const redirectUrl = new URLSearchParams(window.location.search).get("redirect") || "/";
       router.push(redirectUrl);
       router.refresh();
     } catch (err) {
-      setError(t("auth.errors.genericError"));
+      const errorMsg = t("auth.errors.genericError");
+      setError(errorMsg);
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
