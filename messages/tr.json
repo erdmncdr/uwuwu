@@ -1,0 +1,186 @@
+{
+  "nav": {
+    "discover": "Keşfet",
+    "create": "Oluştur",
+    "login": "Giriş Yap",
+    "signup": "Kayıt Ol",
+    "profile": "Profil",
+    "settings": "Ayarlar",
+    "logout": "Çıkış Yap"
+  },
+  "home": {
+    "hero": {
+      "badge": "Turnuvaları Keşfet ve Oluştur",
+      "title": "Favorilerini Seç",
+      "subtitle": "Her Seferinde Bir Mücadele",
+      "description": "Dünya kupası tarzı turnuvalar oluşturun veya mevcut olanları oynayın. Favorilerinize oy verin ve hangisinin öne çıktığını görün!",
+      "createBtn": "Turnuvanı Oluştur",
+      "browseBtn": "Quizlere Göz At"
+    },
+    "search": {
+      "placeholder": "Quiz ara..."
+    },
+    "sort": {
+      "label": "Sırala:",
+      "popular": "Popüler",
+      "latest": "En Yeni"
+    },
+    "categories": {
+      "all": "Tümü"
+    },
+    "results": {
+      "found": "{{count}} Quiz Bulundu",
+      "found_other": "{{count}} Quiz Bulundu",
+      "noResults": "Quiz bulunamadı",
+      "tryAdjusting": "Filtrelerinizi veya arama sorgunuzu ayarlamayı deneyin"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Tekrar Hoş Geldiniz",
+      "description": "Turnuva oluşturmaya ve oynamaya devam etmek için hesabınıza giriş yapın",
+      "emailOrUsername": "E-posta veya Kullanıcı Adı",
+      "emailOrUsernamePlaceholder": "E-posta veya kullanıcı adınızı girin",
+      "password": "Şifre",
+      "passwordPlaceholder": "Şifrenizi girin",
+      "forgotPassword": "Şifremi unuttum?",
+      "submitBtn": "Giriş Yap",
+      "submittingBtn": "Giriş yapılıyor...",
+      "noAccount": "Hesabınız yok mu?",
+      "signupLink": "Kayıt ol"
+    },
+    "register": {
+      "title": "Hesap Oluştur",
+      "description": "Topluluğa katılın ve kendi turnuvalarınızı oluşturmaya başlayın",
+      "email": "E-posta",
+      "emailPlaceholder": "ornek@email.com",
+      "username": "Kullanıcı Adı",
+      "usernamePlaceholder": "Benzersiz bir kullanıcı adı seçin",
+      "usernameHint": "3-20 karakter, harf, rakam, - ve _ kullanılabilir",
+      "password": "Şifre",
+      "passwordPlaceholder": "Güçlü bir şifre oluşturun",
+      "passwordHint": "En az 8 karakter",
+      "confirmPassword": "Şifre Tekrar",
+      "confirmPasswordPlaceholder": "Şifrenizi tekrar girin",
+      "terms": "Kayıt olarak,",
+      "termsLink": "Hizmet Şartlarımızı",
+      "and": "ve",
+      "privacyLink": "Gizlilik Politikamızı",
+      "submitBtn": "Kayıt Ol",
+      "submittingBtn": "Hesap oluşturuluyor...",
+      "hasAccount": "Zaten hesabınız var mı?",
+      "loginLink": "Giriş yap"
+    },
+    "errors": {
+      "invalidCredentials": "Geçersiz kimlik bilgileri",
+      "emailExists": "E-posta zaten kayıtlı",
+      "usernameExists": "Kullanıcı adı zaten alınmış",
+      "passwordsDontMatch": "Şifreler eşleşmiyor",
+      "genericError": "Bir hata oluştu. Lütfen tekrar deneyin."
+    }
+  },
+  "createGame": {
+    "badge": "Turnuvanı Oluştur",
+    "title": "Quizini Oluştur",
+    "description": "Sadece birkaç adımda dünya kupası tarzı turnuva oluşturun",
+    "steps": {
+      "basicInfo": "Temel Bilgiler",
+      "basicInfoDesc": "Başlık, kategori ve açıklama",
+      "addItems": "Öğe Ekle",
+      "addItemsDesc": "Turnuvanıza öğeler ekleyin",
+      "preview": "Önizleme",
+      "previewDesc": "İncele ve yayınla"
+    },
+    "step1": {
+      "title": "Temel Bilgiler",
+      "description": "Bize turnuvanız hakkında bilgi verin",
+      "titleLabel": "Başlık",
+      "titlePlaceholder": "örn., 2024'ün En İyi Anime Karakterleri",
+      "titleHint": "{{count}}/100 karakter",
+      "descLabel": "Açıklama",
+      "descPlaceholder": "Turnuvanızı açıklayın...",
+      "descHint": "{{count}}/1000 karakter",
+      "coverLabel": "Kapak Resmi URL",
+      "coverPlaceholder": "https://ornek.com/resim.jpg",
+      "categoryLabel": "Kategori",
+      "languageLabel": "Dil",
+      "visibilityLabel": "Görünürlük",
+      "nsfwLabel": "NSFW olarak işaretle (18+)",
+      "visibilityPublic": "Herkese Açık",
+      "visibilityUnlisted": "Listelenmemiş",
+      "visibilityPrivate": "Özel"
+    },
+    "step2": {
+      "title": "Turnuva Öğeleri Ekle",
+      "description": "En az 4 öğe ekleyin (maksimum 64)",
+      "bulkAddLabel": "Toplu Ekleme (her satıra bir tane)",
+      "bulkAddPlaceholder": "Öğe isimlerini yapıştırın, her satıra bir tane...",
+      "bulkAddHint": "Varsayılan resimler eklenecektir. Aşağıdan özelleştirebilirsiniz.",
+      "itemLabel": "Öğe {{number}}",
+      "nameLabel": "İsim",
+      "namePlaceholder": "Öğe ismi",
+      "imageLabel": "Resim URL",
+      "imagePlaceholder": "https://...",
+      "descLabel": "Açıklama (opsiyonel)",
+      "descPlaceholder": "Kısa açıklama",
+      "addItemBtn": "Öğe Ekle",
+      "itemsCount": "{{count}} / 64 öğe"
+    },
+    "step3": {
+      "title": "Önizleme ve Yayınla",
+      "description": "Yayınlamadan önce turnuvanızı inceleyin",
+      "readyText": "Yayınlamaya hazır mısınız? Turnuvanızı oluşturmak için aşağıdaki butona tıklayın!",
+      "publishBtn": "Turnuvayı Yayınla",
+      "publishingBtn": "Oluşturuluyor...",
+      "itemsLabel": "{{count}} öğe"
+    },
+    "navigation": {
+      "back": "Geri",
+      "next": "İleri"
+    },
+    "errors": {
+      "titleRequired": "Başlık gerekli",
+      "titleTooShort": "Başlık en az 3 karakter olmalı",
+      "descRequired": "Açıklama gerekli",
+      "descTooShort": "Açıklama en az 10 karakter olmalı",
+      "coverRequired": "Kapak resmi URL gerekli",
+      "categoryRequired": "Lütfen bir kategori seçin",
+      "minItems": "Turnuva için en az 4 öğe gerekli",
+      "maxItems": "Maksimum 64 öğe eklenebilir",
+      "emptyItems": "Tüm öğelerin ismi ve resim URL'si olmalı"
+    }
+  },
+  "worldcup": {
+    "loading": "Quiz yükleniyor...",
+    "notFound": "Quiz Bulunamadı",
+    "notFoundDesc": "Aradığınız quiz mevcut değil",
+    "backHome": "Ana Sayfaya Dön",
+    "about": "Bu Turnuva Hakkında",
+    "createdBy": "Oluşturan",
+    "totalPlays": "Toplam Oynanma",
+    "views": "Görüntülenme",
+    "items": "Öğeler",
+    "contestants": "{{count}} yarışmacı",
+    "startBtn": "Turnuvayı Başlat",
+    "startingBtn": "Başlatılıyor...",
+    "contestantsTitle": "Yarışmacılar",
+    "champion": "Şampiyon!",
+    "championDesc": "{{name}} turnuvayı kazandı!",
+    "playAgain": "Tekrar Oyna",
+    "roundProgress": "Tur {{current}} / {{total}}",
+    "matchProgress": "Maç {{current}} / {{total}}",
+    "vs": "VS"
+  },
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "success": "Başarılı",
+    "cancel": "İptal",
+    "save": "Kaydet",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "share": "Paylaş",
+    "favorite": "Favorile",
+    "unfavorite": "Favorilerden Çıkar"
+  }
+}

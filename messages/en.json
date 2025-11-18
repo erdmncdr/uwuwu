@@ -1,0 +1,186 @@
+{
+  "nav": {
+    "discover": "Discover",
+    "create": "Create",
+    "login": "Login",
+    "signup": "Sign Up",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "home": {
+    "hero": {
+      "badge": "Discover & Create Tournaments",
+      "title": "Choose Your Favorites",
+      "subtitle": "One Battle at a Time",
+      "description": "Create worldcup-style tournaments or play existing ones. Vote for your favorites and see what comes out on top!",
+      "createBtn": "Create Your Tournament",
+      "browseBtn": "Browse Quizzes"
+    },
+    "search": {
+      "placeholder": "Search quizzes..."
+    },
+    "sort": {
+      "label": "Sort by:",
+      "popular": "Popular",
+      "latest": "Latest"
+    },
+    "categories": {
+      "all": "All"
+    },
+    "results": {
+      "found": "{{count}} Quiz Found",
+      "found_other": "{{count}} Quizzes Found",
+      "noResults": "No quizzes found",
+      "tryAdjusting": "Try adjusting your filters or search query"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "description": "Sign in to your account to continue creating and playing tournaments",
+      "emailOrUsername": "Email or Username",
+      "emailOrUsernamePlaceholder": "Enter your email or username",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "forgotPassword": "Forgot password?",
+      "submitBtn": "Sign In",
+      "submittingBtn": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "signupLink": "Sign up"
+    },
+    "register": {
+      "title": "Create Account",
+      "description": "Join the community and start creating your own tournaments",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "username": "Username",
+      "usernamePlaceholder": "Choose a unique username",
+      "usernameHint": "3-20 characters, letters, numbers, - and _ only",
+      "password": "Password",
+      "passwordPlaceholder": "Create a strong password",
+      "passwordHint": "At least 8 characters",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "terms": "By signing up, you agree to our",
+      "termsLink": "Terms of Service",
+      "and": "and",
+      "privacyLink": "Privacy Policy",
+      "submitBtn": "Sign Up",
+      "submittingBtn": "Creating account...",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Sign in"
+    },
+    "errors": {
+      "invalidCredentials": "Invalid credentials",
+      "emailExists": "Email already registered",
+      "usernameExists": "Username already taken",
+      "passwordsDontMatch": "Passwords do not match",
+      "genericError": "An error occurred. Please try again."
+    }
+  },
+  "createGame": {
+    "badge": "Create Your Tournament",
+    "title": "Build Your Quiz",
+    "description": "Create a worldcup-style tournament in just a few steps",
+    "steps": {
+      "basicInfo": "Basic Info",
+      "basicInfoDesc": "Title, category, and description",
+      "addItems": "Add Items",
+      "addItemsDesc": "Add items to your tournament",
+      "preview": "Preview",
+      "previewDesc": "Review and publish"
+    },
+    "step1": {
+      "title": "Basic Information",
+      "description": "Tell us about your tournament",
+      "titleLabel": "Title",
+      "titlePlaceholder": "e.g., Best Anime Characters 2024",
+      "titleHint": "{{count}}/100 characters",
+      "descLabel": "Description",
+      "descPlaceholder": "Describe your tournament...",
+      "descHint": "{{count}}/1000 characters",
+      "coverLabel": "Cover Image URL",
+      "coverPlaceholder": "https://example.com/image.jpg",
+      "categoryLabel": "Category",
+      "languageLabel": "Language",
+      "visibilityLabel": "Visibility",
+      "nsfwLabel": "Mark as NSFW (18+)",
+      "visibilityPublic": "Public",
+      "visibilityUnlisted": "Unlisted",
+      "visibilityPrivate": "Private"
+    },
+    "step2": {
+      "title": "Add Tournament Items",
+      "description": "Add at least 4 items (maximum 64)",
+      "bulkAddLabel": "Bulk Add (one per line)",
+      "bulkAddPlaceholder": "Paste item names, one per line...",
+      "bulkAddHint": "Default images will be added. You can customize them below.",
+      "itemLabel": "Item {{number}}",
+      "nameLabel": "Name",
+      "namePlaceholder": "Item name",
+      "imageLabel": "Image URL",
+      "imagePlaceholder": "https://...",
+      "descLabel": "Description (optional)",
+      "descPlaceholder": "Short description",
+      "addItemBtn": "Add Item",
+      "itemsCount": "{{count}} / 64 items"
+    },
+    "step3": {
+      "title": "Preview & Publish",
+      "description": "Review your tournament before publishing",
+      "readyText": "Ready to publish? Click the button below to create your tournament!",
+      "publishBtn": "Publish Tournament",
+      "publishingBtn": "Creating...",
+      "itemsLabel": "{{count}} items"
+    },
+    "navigation": {
+      "back": "Back",
+      "next": "Next"
+    },
+    "errors": {
+      "titleRequired": "Title is required",
+      "titleTooShort": "Title must be at least 3 characters",
+      "descRequired": "Description is required",
+      "descTooShort": "Description must be at least 10 characters",
+      "coverRequired": "Cover image URL is required",
+      "categoryRequired": "Please select a category",
+      "minItems": "You need at least 4 items for a tournament",
+      "maxItems": "Maximum 64 items allowed",
+      "emptyItems": "All items must have a name and image URL"
+    }
+  },
+  "worldcup": {
+    "loading": "Loading quiz...",
+    "notFound": "Quiz Not Found",
+    "notFoundDesc": "The quiz you're looking for doesn't exist",
+    "backHome": "Back to Home",
+    "about": "About This Tournament",
+    "createdBy": "Created by",
+    "totalPlays": "Total Plays",
+    "views": "Views",
+    "items": "Items",
+    "contestants": "{{count}} contestants",
+    "startBtn": "Start Tournament",
+    "startingBtn": "Starting...",
+    "contestantsTitle": "Contestants",
+    "champion": "Champion!",
+    "championDesc": "{{name}} wins the tournament!",
+    "playAgain": "Play Again",
+    "roundProgress": "Round {{current}} of {{total}}",
+    "matchProgress": "Match {{current}} of {{total}}",
+    "vs": "VS"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "share": "Share",
+    "favorite": "Favorite",
+    "unfavorite": "Unfavorite"
+  }
+}
