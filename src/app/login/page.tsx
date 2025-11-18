@@ -9,8 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { useI18n } from "@/components/providers/i18n-provider";
 
 export default function LoginPage() {
+  const { t } = useI18n();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -34,7 +36,7 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || "Login failed");
+        setError(data.error || t("auth.errors.invalidCredentials"));
         return;
       }
 
@@ -43,7 +45,7 @@ export default function LoginPage() {
       router.push(redirectUrl);
       router.refresh();
     } catch (err) {
-      setError("An error occurred. Please try again.");
+      setError(t("auth.errors.genericError"));
     } finally {
       setLoading(false);
     }
@@ -62,9 +64,9 @@ export default function LoginPage() {
             <div className="mx-auto w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center glow-strong">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
-            <CardTitle className="text-3xl font-bold">Welcome Back</CardTitle>
+            <CardTitle className="text-3xl font-bold">{t("auth.login.title")}</CardTitle>
             <CardDescription className="text-base">
-              Sign in to your account to continue creating and playing tournaments
+              {t("auth.login.description")}
             </CardDescription>
           </CardHeader>
 
@@ -77,11 +79,11 @@ export default function LoginPage() {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="emailOrUsername">Email or Username</Label>
+                <Label htmlFor="emailOrUsername">{t("auth.login.emailOrUsername")}</Label>
                 <Input
                   id="emailOrUsername"
                   type="text"
-                  placeholder="Enter your email or username"
+                  placeholder={t("auth.login.emailOrUsernamePlaceholder")}
                   value={formData.emailOrUsername}
                   onChange={(e) =>
                     setFormData({ ...formData, emailOrUsername: e.target.value })
@@ -93,18 +95,18 @@ export default function LoginPage() {
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password">{t("auth.login.password")}</Label>
                   <Link
                     href="/forgot-password"
                     className="text-xs text-primary hover:underline"
                   >
-                    Forgot password?
+                    {t("auth.login.forgotPassword")}
                   </Link>
                 </div>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder={t("auth.login.passwordPlaceholder")}
                   value={formData.password}
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
@@ -126,20 +128,20 @@ export default function LoginPage() {
                 {loading ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Signing in...
+                    {t("auth.login.submittingBtn")}
                   </>
                 ) : (
                   <>
                     <LogIn className="w-4 h-4 mr-2" />
-                    Sign In
+                    {t("auth.login.submitBtn")}
                   </>
                 )}
               </Button>
 
               <p className="text-sm text-muted-foreground text-center">
-                Don't have an account?{" "}
+                {t("auth.login.noAccount")}{" "}
                 <Link href="/register" className="text-primary font-medium hover:underline">
-                  Sign up
+                  {t("auth.login.signupLink")}
                 </Link>
               </p>
             </CardFooter>

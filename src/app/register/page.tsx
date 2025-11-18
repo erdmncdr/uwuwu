@@ -9,8 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { useI18n } from "@/components/providers/i18n-provider";
 
 export default function RegisterPage() {
+  const { t } = useI18n();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -27,7 +29,7 @@ export default function RegisterPage() {
 
     // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
+      setError(t("auth.errors.passwordsDontMatch"));
       return;
     }
 
@@ -47,7 +49,7 @@ export default function RegisterPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || "Registration failed");
+        setError(data.error || t("auth.errors.genericError"));
         return;
       }
 
@@ -55,7 +57,7 @@ export default function RegisterPage() {
       router.push("/");
       router.refresh();
     } catch (err) {
-      setError("An error occurred. Please try again.");
+      setError(t("auth.errors.genericError"));
     } finally {
       setLoading(false);
     }
@@ -74,9 +76,9 @@ export default function RegisterPage() {
             <div className="mx-auto w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center glow-strong">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
-            <CardTitle className="text-3xl font-bold">Create Account</CardTitle>
+            <CardTitle className="text-3xl font-bold">{t("auth.register.title")}</CardTitle>
             <CardDescription className="text-base">
-              Join the community and start creating your own tournaments
+              {t("auth.register.description")}
             </CardDescription>
           </CardHeader>
 
@@ -89,11 +91,11 @@ export default function RegisterPage() {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("auth.register.email")}</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder={t("auth.register.emailPlaceholder")}
                   value={formData.email}
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
@@ -104,11 +106,11 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="username">{t("auth.register.username")}</Label>
                 <Input
                   id="username"
                   type="text"
-                  placeholder="Choose a unique username"
+                  placeholder={t("auth.register.usernamePlaceholder")}
                   value={formData.username}
                   onChange={(e) =>
                     setFormData({ ...formData, username: e.target.value })
@@ -121,16 +123,16 @@ export default function RegisterPage() {
                   title="Username can only contain letters, numbers, underscores, and hyphens"
                 />
                 <p className="text-xs text-muted-foreground">
-                  3-20 characters, letters, numbers, - and _ only
+                  {t("auth.register.usernameHint")}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t("auth.register.password")}</Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Create a strong password"
+                  placeholder={t("auth.register.passwordPlaceholder")}
                   value={formData.password}
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
@@ -140,16 +142,16 @@ export default function RegisterPage() {
                   minLength={8}
                 />
                 <p className="text-xs text-muted-foreground">
-                  At least 8 characters
+                  {t("auth.register.passwordHint")}
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <Label htmlFor="confirmPassword">{t("auth.register.confirmPassword")}</Label>
                 <Input
                   id="confirmPassword"
                   type="password"
-                  placeholder="Confirm your password"
+                  placeholder={t("auth.register.confirmPasswordPlaceholder")}
                   value={formData.confirmPassword}
                   onChange={(e) =>
                     setFormData({ ...formData, confirmPassword: e.target.value })
@@ -160,13 +162,13 @@ export default function RegisterPage() {
               </div>
 
               <div className="text-xs text-muted-foreground">
-                By signing up, you agree to our{" "}
+                {t("auth.register.terms")}{" "}
                 <Link href="/terms" className="text-primary hover:underline">
-                  Terms of Service
+                  {t("auth.register.termsLink")}
                 </Link>{" "}
-                and{" "}
+                {t("auth.register.and")}{" "}
                 <Link href="/privacy" className="text-primary hover:underline">
-                  Privacy Policy
+                  {t("auth.register.privacyLink")}
                 </Link>
               </div>
             </CardContent>
@@ -182,20 +184,20 @@ export default function RegisterPage() {
                 {loading ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Creating account...
+                    {t("auth.register.submittingBtn")}
                   </>
                 ) : (
                   <>
                     <UserPlus className="w-4 h-4 mr-2" />
-                    Sign Up
+                    {t("auth.register.submitBtn")}
                   </>
                 )}
               </Button>
 
               <p className="text-sm text-muted-foreground text-center">
-                Already have an account?{" "}
+                {t("auth.register.hasAccount")}{" "}
                 <Link href="/login" className="text-primary font-medium hover:underline">
-                  Sign in
+                  {t("auth.register.loginLink")}
                 </Link>
               </p>
             </CardFooter>
