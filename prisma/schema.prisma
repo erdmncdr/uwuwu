@@ -29,9 +29,15 @@ model User {
   updatedAt     DateTime @updatedAt @map("updated_at")
 
   // Relations
-  quizzes      Quiz[]
-  gameSessions GameSession[]
-  reports      Report[]
+  quizzes       Quiz[]
+  gameSessions  GameSession[]
+  reports       Report[]
+  favorites     QuizFavorite[]
+  ratings       QuizRating[]
+  comments      QuizComment[]
+  followers     UserFollow[]    @relation("UserFollowers")
+  following     UserFollow[]    @relation("UserFollowing")
+  notifications Notification[]
 
   @@map("users")
 }
@@ -86,11 +92,14 @@ model Quiz {
   publishedAt     DateTime?      @map("published_at")
 
   // Relations
-  creator      User          @relation(fields: [creatorId], references: [id], onDelete: Cascade)
-  category     Category      @relation(fields: [categoryId], references: [id])
+  creator      User           @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  category     Category       @relation(fields: [categoryId], references: [id])
   items        QuizItem[]
   gameSessions GameSession[]
   reports      Report[]
+  favorites    QuizFavorite[]
+  ratings      QuizRating[]
+  comments     QuizComment[]
 
   @@index([creatorId])
   @@index([categoryId])
@@ -265,4 +274,110 @@ enum ReportStatus {
   UNDER_REVIEW
   RESOLVED
   REJECTED
+}
+
+// ============================================
+// SOCIAL FEATURES
+// ============================================
+
+model QuizFavorite {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  quizId    String   @map("quiz_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, quizId])
+  @@index([userId])
+  @@index([quizId])
+  @@index([createdAt])
+  @@map("quiz_favorites")
+}
+
+model QuizRating {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  quizId    String   @map("quiz_id")
+  rating    Int      // 1-5 stars
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, quizId])
+  @@index([userId])
+  @@index([quizId])
+  @@index([rating])
+  @@map("quiz_ratings")
+}
+
+model QuizComment {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  quizId    String   @map("quiz_id")
+  parentId  String?  @map("parent_id") // for nested comments/replies
+  content   String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user    User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quiz    Quiz          @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  parent  QuizComment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies QuizComment[] @relation("CommentReplies")
+
+  @@index([userId])
+  @@index([quizId])
+  @@index([parentId])
+  @@index([createdAt])
+  @@map("quiz_comments")
+}
+
+model UserFollow {
+  id          String   @id @default(uuid())
+  followerId  String   @map("follower_id")
+  followingId String   @map("following_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  follower  User @relation("UserFollowers", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("UserFollowing", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+  @@map("user_follows")
+}
+
+model Notification {
+  id         String           @id @default(uuid())
+  userId     String           @map("user_id")
+  type       NotificationType
+  title      String
+  message    String           @db.Text
+  link       String?
+  read       Boolean          @default(false)
+  createdAt  DateTime         @default(now()) @map("created_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([read])
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+enum NotificationType {
+  COMMENT
+  RATING
+  FAVORITE
+  FOLLOW
+  QUIZ_PUBLISHED
+  SYSTEM
 }

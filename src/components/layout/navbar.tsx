@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Menu, X, Sparkles, User, LogOut, Settings } from "lucide-react";
+import { LanguageSwitcher } from "@/components/locale/language-switcher";
 
 interface User {
   id: string;
@@ -105,6 +106,9 @@ export function Navbar() {
 
           {/* Auth Section */}
           <div className="hidden md:flex items-center gap-3">
+            {/* Language Switcher */}
+            <LanguageSwitcher />
+
             {user ? (
               <div className="relative">
                 <button
@@ -210,6 +214,11 @@ export function Navbar() {
                 </Link>
               );
             })}
+            <hr className="border-border/50" />
+            {/* Language Switcher for Mobile */}
+            <div className="px-3">
+              <LanguageSwitcher />
+            </div>
             <hr className="border-border/50" />
             {user ? (
               <>
