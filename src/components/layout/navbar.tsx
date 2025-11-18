@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Menu, X, Sparkles, User, LogOut, Settings } from "lucide-react";
 import { LanguageSwitcher } from "@/components/locale/language-switcher";
+import { useI18n } from "@/components/providers/i18n-provider";
 
 interface User {
   id: string;
@@ -16,6 +17,7 @@ interface User {
 
 export function Navbar() {
   const pathname = usePathname();
+  const { t } = useI18n();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -65,8 +67,8 @@ export function Navbar() {
   };
 
   const navLinks = [
-    { href: "/", label: "Discover" },
-    { href: "/create-game", label: "Create", protected: true },
+    { href: "/", label: t("nav.discover") },
+    { href: "/create-game", label: t("nav.create"), protected: true },
   ];
 
   return (
@@ -142,7 +144,7 @@ export function Navbar() {
                         onClick={() => setUserMenuOpen(false)}
                       >
                         <User className="w-4 h-4" />
-                        Profile
+                        {t("nav.profile")}
                       </Link>
                       <Link
                         href="/settings"
@@ -150,7 +152,7 @@ export function Navbar() {
                         onClick={() => setUserMenuOpen(false)}
                       >
                         <Settings className="w-4 h-4" />
-                        Settings
+                        {t("nav.settings")}
                       </Link>
                       <hr className="my-2 border-border/50" />
                       <button
@@ -158,7 +160,7 @@ export function Navbar() {
                         className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-muted/50 transition-colors w-full text-left text-destructive"
                       >
                         <LogOut className="w-4 h-4" />
-                        Logout
+                        {t("nav.logout")}
                       </button>
                     </div>
                   </>
@@ -168,12 +170,12 @@ export function Navbar() {
               <>
                 <Link href="/login">
                   <Button variant="ghost" size="sm">
-                    Login
+                    {t("nav.login")}
                   </Button>
                 </Link>
                 <Link href="/register">
                   <Button variant="gradient" size="sm">
-                    Sign Up
+                    {t("nav.signup")}
                   </Button>
                 </Link>
               </>
@@ -227,32 +229,32 @@ export function Navbar() {
                   className="block px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted/50"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Profile
+                  {t("nav.profile")}
                 </Link>
                 <Link
                   href="/settings"
                   className="block px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted/50"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Settings
+                  {t("nav.settings")}
                 </Link>
                 <button
                   onClick={handleLogout}
                   className="block w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-destructive hover:bg-muted/50"
                 >
-                  Logout
+                  {t("nav.logout")}
                 </button>
               </>
             ) : (
               <div className="flex flex-col gap-2 px-3">
                 <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
                   <Button variant="ghost" className="w-full">
-                    Login
+                    {t("nav.login")}
                   </Button>
                 </Link>
                 <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
                   <Button variant="gradient" className="w-full">
-                    Sign Up
+                    {t("nav.signup")}
                   </Button>
                 </Link>
               </div>

@@ -182,5 +182,32 @@
     "share": "Paylaş",
     "favorite": "Favorile",
     "unfavorite": "Favorilerden Çıkar"
+  },
+  "footer": {
+    "about": {
+      "title": "Quiz Tournament",
+      "description": "Etkileşimli dünya kupası tarzı quizler oluşturun ve oynayın. Favorilerinizi seçin ve hangisinin kazandığını keşfedin!"
+    },
+    "quickLinks": {
+      "title": "Hızlı Bağlantılar",
+      "discover": "Quizleri Keşfet",
+      "create": "Quiz Oluştur",
+      "categories": "Kategoriler"
+    },
+    "community": {
+      "title": "Topluluk",
+      "about": "Hakkımızda",
+      "guidelines": "Kurallar",
+      "privacy": "Gizlilik Politikası",
+      "terms": "Hizmet Şartları"
+    },
+    "social": {
+      "title": "Bağlantı"
+    },
+    "bottom": {
+      "copyright": "© {{year}} Quiz Tournament. Tüm hakları saklıdır.",
+      "madeWith": "Quiz severler için",
+      "forQuizLovers": "ile yapıldı"
+    }
   }
 }

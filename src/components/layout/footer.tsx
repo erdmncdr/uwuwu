@@ -1,7 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { Github, Twitter, Heart } from "lucide-react";
+import { useI18n } from "@/components/providers/i18n-provider";
 
 export function Footer() {
+  const { t } = useI18n();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -10,29 +14,29 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About */}
           <div className="space-y-3">
-            <h3 className="font-semibold text-lg gradient-text">Quiz Tournament</h3>
+            <h3 className="font-semibold text-lg gradient-text">{t("footer.about.title")}</h3>
             <p className="text-sm text-muted-foreground">
-              Create and play interactive worldcup-style quizzes. Choose your favorites and discover what wins!
+              {t("footer.about.description")}
             </p>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-3">
-            <h4 className="font-semibold text-sm">Quick Links</h4>
+            <h4 className="font-semibold text-sm">{t("footer.quickLinks.title")}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <Link href="/" className="hover:text-primary transition-colors">
-                  Discover Quizzes
+                  {t("footer.quickLinks.discover")}
                 </Link>
               </li>
               <li>
                 <Link href="/create-game" className="hover:text-primary transition-colors">
-                  Create Quiz
+                  {t("footer.quickLinks.create")}
                 </Link>
               </li>
               <li>
                 <Link href="/categories" className="hover:text-primary transition-colors">
-                  Categories
+                  {t("footer.quickLinks.categories")}
                 </Link>
               </li>
             </ul>
@@ -40,26 +44,26 @@ export function Footer() {
 
           {/* Community */}
           <div className="space-y-3">
-            <h4 className="font-semibold text-sm">Community</h4>
+            <h4 className="font-semibold text-sm">{t("footer.community.title")}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <Link href="/about" className="hover:text-primary transition-colors">
-                  About Us
+                  {t("footer.community.about")}
                 </Link>
               </li>
               <li>
                 <Link href="/guidelines" className="hover:text-primary transition-colors">
-                  Guidelines
+                  {t("footer.community.guidelines")}
                 </Link>
               </li>
               <li>
                 <Link href="/privacy" className="hover:text-primary transition-colors">
-                  Privacy Policy
+                  {t("footer.community.privacy")}
                 </Link>
               </li>
               <li>
                 <Link href="/terms" className="hover:text-primary transition-colors">
-                  Terms of Service
+                  {t("footer.community.terms")}
                 </Link>
               </li>
             </ul>
@@ -67,7 +71,7 @@ export function Footer() {
 
           {/* Social */}
           <div className="space-y-3">
-            <h4 className="font-semibold text-sm">Connect</h4>
+            <h4 className="font-semibold text-sm">{t("footer.social.title")}</h4>
             <div className="flex gap-3">
               <a
                 href="https://github.com"
@@ -91,9 +95,9 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-8 pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-          <p>© {currentYear} Quiz Tournament. All rights reserved.</p>
+          <p>{t("footer.bottom.copyright", { year: currentYear })}</p>
           <p className="flex items-center gap-1">
-            Made with <Heart className="w-4 h-4 text-destructive fill-destructive" /> for quiz lovers
+            {t("footer.bottom.madeWith")} <Heart className="w-4 h-4 text-destructive fill-destructive" /> {t("footer.bottom.forQuizLovers")}
           </p>
         </div>
       </div>

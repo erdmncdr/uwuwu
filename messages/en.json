@@ -182,5 +182,32 @@
     "share": "Share",
     "favorite": "Favorite",
     "unfavorite": "Unfavorite"
+  },
+  "footer": {
+    "about": {
+      "title": "Quiz Tournament",
+      "description": "Create and play interactive worldcup-style quizzes. Choose your favorites and discover what wins!"
+    },
+    "quickLinks": {
+      "title": "Quick Links",
+      "discover": "Discover Quizzes",
+      "create": "Create Quiz",
+      "categories": "Categories"
+    },
+    "community": {
+      "title": "Community",
+      "about": "About Us",
+      "guidelines": "Guidelines",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    },
+    "social": {
+      "title": "Connect"
+    },
+    "bottom": {
+      "copyright": "© {{year}} Quiz Tournament. All rights reserved.",
+      "madeWith": "Made with",
+      "forQuizLovers": "for quiz lovers"
+    }
   }
 }
